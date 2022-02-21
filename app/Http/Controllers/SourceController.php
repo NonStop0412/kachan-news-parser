@@ -53,11 +53,12 @@ class SourceController extends Controller
         $name = $request->get('name');
         $url = $request->get('url');
         $active = (int) $request->get('active', 0);
-//        dd($active);
         $source = Source::find($id);
+
         if (!is_object($source)){
             return redirect()->route('admin.sources');
         }
+
         $source->edit($name, $url, $active);
         \session()->flash('message', 'Source has been edited!');
         return redirect()->route('admin.sources');

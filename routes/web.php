@@ -22,6 +22,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::get('/load', 'HomeController@loadNews')->name('load.news');
 });
 
+//For view array with feeds from new source
 Route::get('/tsn', function () {
     $source = new Parsing('https://www.pravda.com.ua/rss/view_news/');
     $feed = [];
@@ -31,10 +32,13 @@ Route::get('/tsn', function () {
 
 // Admin
 Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function(){
+
     // Main page
     Route::get('/admin', 'AdminController@index')->name('admin.index');
+
     // Profile page
     Route::get('/admin/profile/{id}', 'AdminController@profile')->name('profile');
+
     // Sources
     Route::get('/admin/sources', 'SourceController@sources')->name('admin.sources');
     Route::delete('/admin/sources/delete/{id}', 'SourceController@deleteSource')->name('delete.source');
@@ -46,4 +50,3 @@ Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fu
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -15,15 +15,6 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-6">
-                    {{--@if ($errors->any())--}}
-                        {{--<div class="alert alert-danger alert-dismissible">--}}
-                            {{--<ul>--}}
-                                {{--@foreach ($errors->all() as $error)--}}
-                                    {{--<li>{{ $error }}</li>--}}
-                                {{--@endforeach--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                    {{--@endif--}}
                     <form action="{{route('add.source')}}" method="post">
                         @csrf
                         <br class="form-group">

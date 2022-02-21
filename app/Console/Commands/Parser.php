@@ -42,7 +42,7 @@ class Parser extends Command
     {
         $sources = Source::all()->where('is_active', 1);
 
-        foreach($sources as $source) {
+        foreach ($sources as $source) {
             ProcessParser::dispatch($source->url);
         }
 

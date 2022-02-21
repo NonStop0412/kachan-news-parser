@@ -37,10 +37,6 @@ class HomeController extends Controller
         $lastArt = new \DateTime();
         $lastArt ->setTimestamp($date);
 
-//        dd($lastArt);
-//        $lastArt = date("Y-m-d H:m:s",$request->query('lastArt'));
-//        dd($lastArt);
-
         $formResult = function (string $message, bool $isSuccess, array $data = []){
             return [
                 'message' => $message,
@@ -49,17 +45,18 @@ class HomeController extends Controller
             ];
         };
 
-        if($page < 1) {
+        if ($page < 1) {
             return response()->json($formResult('Page is wrong!', false))->setStatusCode(400);
         }
 
-        if($page >= 1 ) {
+        if ($page >= 1) {
             $page -= 1;
         }
+
         $offset = $page * 10;
         $feeds = Article::all()->where('published_date', '<', $lastArt->format('Y-m-d H:i:s'))->sortByDesc('published_date')->skip($offset)->take(10);
 
-        $feeds->map( function ($feed) {
+        $feeds->map(function ($feed) {
             $feed->published_date = date("d.m.y H:i", strtotime($feed->published_date));
             $feed->source_name = Source::getName($feed->source_id);
             return $feed;
