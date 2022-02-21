@@ -1,5 +1,6 @@
 ## News parser
-Author: Artem Kachan - https://www.instagram.com/jacka4an/
+Author: Artem Kachan
+
 Instruments:
 * PHP 7.4;
 * Laravel 8;
