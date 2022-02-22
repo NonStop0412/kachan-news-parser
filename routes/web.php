@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Parsing;
-use App\Models\Article;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -22,14 +20,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::get('/load', 'HomeController@loadNews')->name('load.news');
 });
 
-//For view array with feeds from new source
-Route::get('/tsn', function () {
-    $source = new Parsing('https://www.pravda.com.ua/rss/view_news/');
-    $feed = [];
-    $feed[] = $source->getFeed();
-    return view('tsn', ['feeds' => $feed]);
-});
-
 // Admin
 Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function(){
 
@@ -41,6 +31,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fu
 
     // Sources
     Route::get('/admin/sources', 'SourceController@sources')->name('admin.sources');
+    Route::post('/admin/source/deactivate/{id}', 'SourceController@deactivateSource')->name('deactivate.source');
+    Route::post('/admin/source/activate/{id}', 'SourceController@activateSource')->name('activate.source');
     Route::delete('/admin/sources/delete/{id}', 'SourceController@deleteSource')->name('delete.source');
     Route::get('/admin/sources/form/add', 'SourceController@addFormSource')->name('add.source.form');
     Route::post('/admin/sources/add', 'SourceController@addSource')->name('add.source');

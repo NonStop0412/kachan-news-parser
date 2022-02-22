@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @yield('title')
 
     <link href="/css/app.css" rel="stylesheet">
 
@@ -36,6 +36,8 @@
     <![endif]-->
 </head>
 <body>
+@include('admin.panel')
+@yield('content')
 <!-- jQuery -->
 <script src="/js/jquery.min.js"></script>
 

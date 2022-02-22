@@ -1,7 +1,6 @@
 <?php
 namespace App;
 
-use App\Models\Article;
 use Illuminate\Support\Facades\Log;
 use PicoFeed\Reader\Reader;
 use PicoFeed\PicoFeedException;
@@ -13,7 +12,7 @@ class Parsing
 {
     private $link;
 
-    public function __construct($link)
+    public function __construct(string $link)
     {
         $this->link = $link;
     }
@@ -22,6 +21,7 @@ class Parsing
     {
         $config = new Config;
         $config->setMaxBodySize(10485760);
+
         return $config;
     }
 
@@ -44,6 +44,7 @@ class Parsing
             Log::error($e->getMessage());
             $source = Source::where('url', $this->link)->first();
             $source->deactivate();
+
             return 0;
         }
 

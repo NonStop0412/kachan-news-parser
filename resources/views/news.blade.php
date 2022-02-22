@@ -26,7 +26,12 @@
             </figure>
         @endforeach
     </div>
-    <p><a href="{{route('load.news')}}" id="load-news">Next 10</a></p>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p><a href="{{route('load.news')}}" id="load-news">Show next 10 News</a></p>
+        </blockquote>
+    </figure>
+
 </div>
     <script>
         var page = 1;

@@ -1,17 +1,11 @@
 @extends('layouts/admin')
-        <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sources</title>
-</head>
-<body>
 
+@section('title')
+    <title>Sources</title>
+@endsection
+
+@section('content')
 <div id="wrapper">
-    @include('admin.panel')
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -53,9 +47,25 @@
                                         <td><a href="{{$source->url}}" target="_blank">{{$source->url}}</a></td>
                                         <td>
                                             @if($source->is_active == 1)
-                                                <p>Yes</p>
+                                                <div class="col-lg-4" id="isActive">
+                                                    <p>Yes</p>
+                                                </div>
+                                                <div class="col-lg-offset-2">
+                                                    <form action="{{route('deactivate.source', $source->id)}}" method="post" id="deactivate" onsubmit="return confirm('Are u sure to deactivate source?')">
+                                                        @csrf
+                                                        <button class="btn btn-outline btn-danger" type="submit" style="width:40%">Deactivate</button>
+                                                    </form>
+                                                </div>
                                             @else
-                                                <p>No</p>
+                                                <div class="col-lg-4">
+                                                    <p>No</p>
+                                                </div>
+                                                <div class="col-lg-offset-2">
+                                                    <form action="{{route('activate.source', $source->id)}}" method="post" onsubmit="return confirm('Are u sure to activate source?')">
+                                                        @csrf
+                                                        <button class="btn btn-outline btn-success" type="submit" style="width:40%">Activate</button>
+                                                    </form>
+                                                </div>
                                             @endif
                                         </td>
                                         <td class="center">
@@ -76,18 +86,11 @@
                                 </table>
                                 {{$sources->links()}}
                             </div>
-
-                <!-- /.col-lg-6 -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </div>
             </div>
         </div>
     </div>
-    <!-- /#page-wrapper -->
-
 </div>
-</body>
-</html>
+@endsection

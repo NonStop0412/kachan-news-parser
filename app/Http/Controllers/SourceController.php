@@ -4,24 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddSource;
 use App\Http\Requests\EditSource;
-use Illuminate\Http\Request;
 use App\Models\Source;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Session;
+
 
 class SourceController extends Controller
 {
     public function sources()
     {
         $sources = Source::paginate(10);
+
         return view('admin.sources', ['sources' => $sources]);
     }
 
-    public function deleteSource($id)
+    public function deactivateSource(int $id)
+    {
+        $source = Source::find($id);
+        $source->deactivate();
+        \session()->flash('message', 'Source has been deactivated!');
+
+        return redirect()->route('admin.sources');
+    }
+
+    public function activateSource(int $id)
+    {
+        $source = Source::find($id);
+        $source->activate();
+        \session()->flash('message', 'Source has been activated!');
+
+        return redirect()->route('admin.sources');
+    }
+
+    public function deleteSource(int $id)
     {
         $source = Source::find($id);
         $source->delete();
         \session()->flash('message', 'Source has been deleted!');
+
         return redirect()->route('admin.sources');
     }
 
@@ -36,14 +54,16 @@ class SourceController extends Controller
         $url = $request->get('url');
         (Source::create($name, $url));
         \session()->flash('message', 'Source has been created!');
+
         return redirect()->route('admin.sources');
     }
-    public function editFormSource($id)
+    public function editFormSource(int $id)
     {
         $source = Source::find($id);
         if (!is_object($source)){
             return redirect()->route('admin.sources');
         }
+
         return view('admin.editFormSource', ['source' => $source]);
     }
 
@@ -56,11 +76,13 @@ class SourceController extends Controller
         $source = Source::find($id);
 
         if (!is_object($source)){
+
             return redirect()->route('admin.sources');
         }
 
         $source->edit($name, $url, $active);
         \session()->flash('message', 'Source has been edited!');
+
         return redirect()->route('admin.sources');
     }
 }

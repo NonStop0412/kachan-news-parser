@@ -2,31 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use function Doctrine\Common\Cache\Psr6\get;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Source;
-use function Webmozart\Assert\Tests\StaticAnalysis\isEmptyArray;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         /** @var Collection $feeds */
         $feeds = Article::all()->sortByDesc('published_date')->take(10);
         $lastArt = new \DateTime($feeds->last()->published_date);
+
         return view('news', ['feeds' => $feeds, 'lastArt' => $lastArt->getTimestamp()]);
     }
 
@@ -37,7 +25,7 @@ class HomeController extends Controller
         $lastArt = new \DateTime();
         $lastArt ->setTimestamp($date);
 
-        $formResult = function (string $message, bool $isSuccess, array $data = []){
+        $formResult = static function (string $message, bool $isSuccess, array $data = []){
             return [
                 'message' => $message,
                 'success' => $isSuccess,
@@ -46,11 +34,12 @@ class HomeController extends Controller
         };
 
         if ($page < 1) {
+
             return response()->json($formResult('Page is wrong!', false))->setStatusCode(400);
         }
 
         if ($page >= 1) {
-            $page -= 1;
+            --$page;
         }
 
         $offset = $page * 10;
@@ -59,10 +48,12 @@ class HomeController extends Controller
         $feeds->map(function ($feed) {
             $feed->published_date = date("d.m.y H:i", strtotime($feed->published_date));
             $feed->source_name = Source::getName($feed->source_id);
+
             return $feed;
         });
 
         if ($feeds->isEmpty()){
+
             return response()->json($formResult('No data', false))->setStatusCode(404);
         }
 

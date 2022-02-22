@@ -1,4 +1,3 @@
-@extends('layouts/admin')
 <div id="wrapper">
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="navbar-header">

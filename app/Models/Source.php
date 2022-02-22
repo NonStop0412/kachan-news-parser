@@ -15,6 +15,7 @@ class Source extends Model
         $source->name = $name;
         $source->url = $link;
         $source->save();
+
         return $source;
     }
 
@@ -24,21 +25,32 @@ class Source extends Model
         $this->url = $url;
         $this->is_active = $active;
         $this->save();
+
         return $this;
     }
+
     public function deactivate()
     {
         $this->is_active = 0;
         $this->save();
+
         return $this;
     }
 
-    public static function getId($url)
+    public function activate()
+    {
+        $this->is_active = 1;
+        $this->save();
+
+        return $this;
+    }
+
+    public static function getId(string $url)
     {
         return self::where('url', $url)->first()->id;
     }
 
-    public static function getName($id)
+    public static function getName(int $id)
     {
         return self::where('id', $id)->first()->name;
     }
