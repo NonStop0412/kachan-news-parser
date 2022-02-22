@@ -31,8 +31,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fu
 
     // Sources
     Route::get('/admin/sources', 'SourceController@sources')->name('admin.sources');
-    Route::post('/admin/source/deactivate/{id}', 'SourceController@deactivateSource')->name('deactivate.source');
-    Route::post('/admin/source/activate/{id}', 'SourceController@activateSource')->name('activate.source');
+    Route::post('/admin/source/change-status/{id}', 'SourceController@changeStatusSource')->name('change-status.source');
     Route::delete('/admin/sources/delete/{id}', 'SourceController@deleteSource')->name('delete.source');
     Route::get('/admin/sources/form/add', 'SourceController@addFormSource')->name('add.source.form');
     Route::post('/admin/sources/add', 'SourceController@addSource')->name('add.source');

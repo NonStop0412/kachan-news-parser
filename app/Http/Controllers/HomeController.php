@@ -34,7 +34,6 @@ class HomeController extends Controller
         };
 
         if ($page < 1) {
-
             return response()->json($formResult('Page is wrong!', false))->setStatusCode(400);
         }
 
@@ -53,7 +52,6 @@ class HomeController extends Controller
         });
 
         if ($feeds->isEmpty()){
-
             return response()->json($formResult('No data', false))->setStatusCode(404);
         }
 

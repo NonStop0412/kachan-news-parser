@@ -19,11 +19,10 @@ class Source extends Model
         return $source;
     }
 
-    public function edit(string $name, string $url, $active): self
+    public function edit(string $name, string $url): self
     {
         $this->name = $name;
         $this->url = $url;
-        $this->is_active = $active;
         $this->save();
 
         return $this;

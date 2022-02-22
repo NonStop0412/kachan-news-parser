@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddSource;
 use App\Http\Requests\EditSource;
 use App\Models\Source;
+use Illuminate\Support\Facades\Request;
 
 
 class SourceController extends Controller
@@ -16,32 +17,29 @@ class SourceController extends Controller
         return view('admin.sources', ['sources' => $sources]);
     }
 
-    public function deactivateSource(int $id)
+    public function changeStatusSource(int $id)
     {
         $source = Source::find($id);
+
+        $formResult = static function (string $message, bool $isSuccess, bool $status){
+            return [
+                'message' => $message,
+                'success' => $isSuccess,
+                'status' => $status
+            ];
+        };
+
+        if ($source->is_active === 0) {
+            $source->activate();
+
+            return response()->json($formResult('Successful',true, true));
+        }
+
         $source->deactivate();
-        \session()->flash('message', 'Source has been deactivated!');
 
-        return redirect()->route('admin.sources');
+        return response()->json($formResult('Successful',true, false));
     }
 
-    public function activateSource(int $id)
-    {
-        $source = Source::find($id);
-        $source->activate();
-        \session()->flash('message', 'Source has been activated!');
-
-        return redirect()->route('admin.sources');
-    }
-
-    public function deleteSource(int $id)
-    {
-        $source = Source::find($id);
-        $source->delete();
-        \session()->flash('message', 'Source has been deleted!');
-
-        return redirect()->route('admin.sources');
-    }
 
     public function addFormSource()
     {

@@ -25,12 +25,6 @@
                         <div class="alert alert-danger">{{ $message }}<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
                         @enderror
                         <input class="form-control" name="url" required="required" value="{{$source->url}}">
-                        <label>Active</label>
-                        <input type="checkbox" name="active" value="1"
-                        @if($source->is_active == 1)
-                            checked="checked"
-                        @endif
-                        >
                         <br class="form-group">
                         <button class="btn btn-success" type="submit">Save</button>
                     </form>

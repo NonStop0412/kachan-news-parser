@@ -47,24 +47,18 @@
                                         <td><a href="{{$source->url}}" target="_blank">{{$source->url}}</a></td>
                                         <td>
                                             @if($source->is_active == 1)
-                                                <div class="col-lg-4" id="isActive">
-                                                    <p>Yes</p>
+                                                <div class="col-lg-4">
+                                                    <p id="{{$source->id}}">Yes</p>
                                                 </div>
                                                 <div class="col-lg-offset-2">
-                                                    <form action="{{route('deactivate.source', $source->id)}}" method="post" id="deactivate" onsubmit="return confirm('Are u sure to deactivate source?')">
-                                                        @csrf
-                                                        <button class="btn btn-outline btn-danger" type="submit" style="width:40%">Deactivate</button>
-                                                    </form>
+                                                        <button class="btn btn-outline btn-danger" id="btn{{$source->id}}" onclick="changeStatus({{$source->id}})" style="width:40%">Deactivate</button>
                                                 </div>
                                             @else
                                                 <div class="col-lg-4">
-                                                    <p>No</p>
+                                                    <p id="{{$source->id}}">No</p>
                                                 </div>
                                                 <div class="col-lg-offset-2">
-                                                    <form action="{{route('activate.source', $source->id)}}" method="post" onsubmit="return confirm('Are u sure to activate source?')">
-                                                        @csrf
-                                                        <button class="btn btn-outline btn-success" type="submit" style="width:40%">Activate</button>
-                                                    </form>
+                                                        <button class="btn btn-outline btn-success" id="btn{{$source->id}}" onclick="changeStatus({{$source->id}})" style="width:40%">Activate</button>
                                                 </div>
                                             @endif
                                         </td>
@@ -93,4 +87,40 @@
         </div>
     </div>
 </div>
+
+<script>
+        function changeStatus (id)
+        {
+            var url = "{{route('change-status.source', '')}}"+"/"+id;
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.status) {
+                        var status = document.getElementById(id);
+                        status.innerHTML = "Yes";
+
+                        var button = document.getElementById("btn" + id);
+                        button.innerHTML = "Deactivate";
+                        button.className = "btn btn-outline btn-danger";
+                    } else {
+                        var status = document.getElementById(id);
+                        status.innerHTML = "No";
+
+                        var button = document.getElementById("btn" + id);
+                        button.innerHTML = "Activate";
+                        button.className = "btn btn-outline btn-success";
+                    }
+                },
+                error : function(data) {
+                    alert('Error');
+                }
+            });
+        }
+</script>
 @endsection
