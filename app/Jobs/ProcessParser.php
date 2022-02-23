@@ -21,7 +21,7 @@ class ProcessParser implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($link)
+    public function __construct(string $link)
     {
         $this->link = $link;
     }

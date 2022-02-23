@@ -32,7 +32,7 @@ class Parsing
 
         try {
             // Return a resource
-         $resource = $reader->download($this->link);
+            $resource = $reader->download($this->link);
 
          // Return the right parser instance according to the feed format
             $parser = $reader->getParser(
