@@ -15,7 +15,7 @@
         @if(!Auth::user())
         <a href="{{route('login')}}" class="link-primary">Log in</a>
         @else
-            <a href="{{route('admin.index')}}" class="link-primary">Admin Panel</a>
+            <a href="{{route('admin.index')}}" class="link-primary" target="_blank">Admin Panel</a>
       </span>
     <form action="{{route('logout')}}" method="post">
         @csrf

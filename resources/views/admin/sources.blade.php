@@ -51,14 +51,14 @@
                                                     <p id="{{$source->id}}">Yes</p>
                                                 </div>
                                                 <div class="col-lg-offset-2">
-                                                        <button class="btn btn-outline btn-danger" id="btn{{$source->id}}" onclick="changeStatus({{$source->id}})" style="width:40%">Deactivate</button>
+                                                        <button class="btn btn-outline btn-danger" id="btn{{$source->id}}" onclick="changeStatus({{$source->id}})" style="width:40%">Off</button>
                                                 </div>
                                             @else
                                                 <div class="col-lg-4">
                                                     <p id="{{$source->id}}">No</p>
                                                 </div>
                                                 <div class="col-lg-offset-2">
-                                                        <button class="btn btn-outline btn-success" id="btn{{$source->id}}" onclick="changeStatus({{$source->id}})" style="width:40%">Activate</button>
+                                                        <button class="btn btn-outline btn-success" id="btn{{$source->id}}" onclick="changeStatus({{$source->id}})" style="width:40%">On</button>
                                                 </div>
                                             @endif
                                         </td>
@@ -66,7 +66,7 @@
                                             <div class="col-lg-4">
                                                 <a href="{{route('edit.source.form', $source->id)}}"><button class="btn btn-outline btn-info" type="submit">Edit</button></a>
                                             </div>
-                                            <div class="col-lg-offset-2">
+                                            <div class="col-lg-offset-4">
                                             <form action="{{route('delete.source', $source->id)}}" method="post" onsubmit="return confirm('Are u sure to delete source?')">
                                                 @method('delete')
                                                 @csrf
@@ -106,14 +106,14 @@
                         status.innerHTML = "Yes";
 
                         var button = document.getElementById("btn" + id);
-                        button.innerHTML = "Deactivate";
+                        button.innerHTML = "Off";
                         button.className = "btn btn-outline btn-danger";
                     } else {
                         var status = document.getElementById(id);
                         status.innerHTML = "No";
 
                         var button = document.getElementById("btn" + id);
-                        button.innerHTML = "Activate";
+                        button.innerHTML = "On";
                         button.className = "btn btn-outline btn-success";
                     }
                 },

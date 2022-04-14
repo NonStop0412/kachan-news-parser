@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-//News
+// News
 Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::get('/', 'HomeController@index')->name('/');
     Route::get('/load', 'HomeController@loadNews')->name('load.news');
@@ -40,4 +40,3 @@ Route::group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fu
 });
 
 Auth::routes();
-

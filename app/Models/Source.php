@@ -54,4 +54,9 @@ class Source extends Model
         return self::where('id', $id)->first()->name;
     }
 
+    public static function getNameByLink(string $link)
+    {
+        return self::where('url', $link)->first()->name;
+    }
+
 }
